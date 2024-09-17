@@ -111,7 +111,7 @@
 												</td>
 												<?php if (get_user_access_write('staff')): ?>
 													<td class="p-4 border rtl:border-l border-t-0 border-l-0 border-gray-50 dark:border-zinc-600">
-														<a href="<?php echo get_site_url(); ?>/edit-user?user=<?php echo $value->data->ID; ?>">
+														<a href="<?php echo get_site_url(); ?>/user-login-log?userID=<?php echo $value->data->ID; ?>">
 															<button type="button" class="btn text-white bg-red-500 border-red-500 hover:bg-red-600 hover:border-red-600 focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-500/30 active:bg-red-600 active:border-red-600">
 																<i class="bx bxs-data text-16 align-middle "></i>
 															</button>
