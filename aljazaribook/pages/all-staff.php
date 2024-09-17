@@ -41,24 +41,21 @@
 									<thead>
 										<tr>
 											<th class="p-4 pr-8 border rtl:border-l-0 border-y-2 border-gray-50 dark:border-zinc-600">
-												Portal ID
-											</th>
-											<th class="p-4 pr-8 border border-y-2 border-gray-50 dark:border-zinc-600 border-l-0">
-												Eyotek ID
-											</th>
-											<th class="p-4 pr-8 border border-y-2 border-gray-50 dark:border-zinc-600 border-l-0">
 												Name Surname
 											</th>
 											<th class="p-4 pr-8 border border-y-2 border-gray-50 dark:border-zinc-600 border-l-0">
 												Email
 											</th>
 											<th class="p-4 pr-8 border border-y-2 border-gray-50 dark:border-zinc-600 border-l-0">
-												Authorization
+												Campus - Year
 											</th>
 											<th class="p-4 pr-8 border border-y-2 border-gray-50 dark:border-zinc-600 border-l-0">
 												User Role
 											</th>
 											<?php if (get_user_access_write('staff')): ?>
+												<th class="p-4 pr-8 border border-y-2 border-gray-50 dark:border-zinc-600 border-l-0">
+													User Log
+												</th>
 												<th class="p-4 pr-8 border rtl:border-l border-y-2 border-gray-50 dark:border-zinc-600 border-l-0">
 													Edit
 												</th>
@@ -77,12 +74,6 @@
 											<tr>
 
 												<td class="p-4 pr-8 border rtl:border-l-0 border-t-0 border-gray-50 dark:border-zinc-600">
-													<?php echo $value->data->ID; ?>
-												</td>
-												<td class="p-4 pr-8 border border-t-0 border-l-0 border-gray-50 dark:border-zinc-600">
-													<?php echo get_field('school_no', 'user_'.$value->data->ID); ?>
-												</td>
-												<td class="p-4 pr-8 border border-t-0 border-l-0 border-gray-50 dark:border-zinc-600">
 													<?php echo $value->data->display_name; ?>
 												</td>
 												<td class="p-4 pr-8 border border-t-0 border-l-0 border-gray-50 dark:border-zinc-600">
@@ -90,12 +81,12 @@
 														<?php echo $value->data->user_email; ?>
 													</a>
 												</td>
-												<td class="p-4 pr-8 border border-t-0 border-l-0 border-gray-50 dark:border-zinc-600">
+												<td class="p-2 pr-2 border border-t-0 border-l-0 border-gray-50 dark:border-zinc-600" style="display: flex; flex-flow: wrap;">
 													<?php  
 													$user_all_sites = get_blogs_of_user($value->data->ID);
 													foreach ($user_all_sites as $keys => $values) {
 														?>
-														<a site-id="<?php echo $values->userblog_id; ?>" href="<?php echo $values->siteurl; ?>">
+														<a style="max-width: 50%;" site-id="<?php echo $values->userblog_id; ?>" href="<?php echo $values->siteurl; ?>">
 															<button style="margin-bottom: 5px;" type="button" class="btn rounded-full text-white bg-sky-500 border-sky-500 hover:bg-sky-600 hover:border-sky-600 focus:bg-sky-600 focus:border-sky-600 focus:ring focus:ring-sky-500/30 active:bg-sky-600 active:border-sky-600">
 																<?php echo $values->blogname; ?>
 															</button>
@@ -114,12 +105,18 @@
 																$user_roles = $user_info_role->roles[1];
 															}
 														} 
-
 														echo $user_roles;
 														?>
 													</a>
 												</td>
 												<?php if (get_user_access_write('staff')): ?>
+													<td class="p-4 border rtl:border-l border-t-0 border-l-0 border-gray-50 dark:border-zinc-600">
+														<a href="<?php echo get_site_url(); ?>/edit-user?user=<?php echo $value->data->ID; ?>">
+															<button type="button" class="btn text-white bg-red-500 border-red-500 hover:bg-red-600 hover:border-red-600 focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-500/30 active:bg-red-600 active:border-red-600">
+																<i class="bx bxs-data text-16 align-middle "></i>
+															</button>
+														</a>
+													</td>
 													<td class="p-4 border rtl:border-l border-t-0 border-l-0 border-gray-50 dark:border-zinc-600">
 														<a href="<?php echo get_site_url(); ?>/edit-user?user=<?php echo $value->data->ID; ?>">
 															<button style="width: 100%;" type="button" class="btn text-white bg-violet-500 border-violet-500 hover:bg-violet-600 hover:border-violet-600 focus:bg-violet-600 focus:border-violet-600 focus:ring focus:ring-violet-500/30 active:bg-violet-600 active:border-violet-600">
