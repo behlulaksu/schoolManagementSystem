@@ -269,3 +269,30 @@ function my_ajax_upload_user_image(){
 	wp_die();
 
 } 
+
+
+
+/* AJAX Upload Course Callback */
+add_action('wp_ajax_nopriv_my_ajax_user_asc_change', 'my_ajax_user_asc_change');
+add_action('wp_ajax_my_ajax_user_asc_change', 'my_ajax_user_asc_change');
+
+function my_ajax_user_asc_change(){
+
+	global $wpdb;
+	$sonuclar = '';
+
+	$user_system_id = $_REQUEST['user_system_id'];
+	$user_asc_id = $_REQUEST['user_asc_id'];
+
+	if (!empty($user_asc_id)) {
+		$sonuclar = update_field( 'asc_time_table_id', $user_asc_id, 'user_'.$user_system_id );		
+	}else{
+		$sonuclar = "problem";
+	}
+
+
+	wp_send_json_success( $uploaded_file['url']);
+
+	wp_die();
+
+} 

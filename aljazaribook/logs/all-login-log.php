@@ -43,10 +43,12 @@ $sonuclar = $wpdb->get_results($query);
 											<?php echo $value->id; ?>
 										</td>
 										<td class="p-4 pr-8 border rtl:border-l-0 border-t-0 border-gray-50 dark:border-zinc-600">
-											<?php
-											$user = get_user_by('ID', $value->user_id);
-											echo $user->display_name;;
-											?>
+											<a href="<?php echo get_site_url(); ?>/user-login-log?userID=<?php echo $value->user_id; ?>">
+												<?php
+												$user = get_user_by('ID', $value->user_id);
+												echo $user->display_name;;
+												?>
+											</a>
 										</td>
 										<td class="p-4 pr-8 border rtl:border-l-0 border-t-0 border-gray-50 dark:border-zinc-600">
 											<?php echo $value->ip_adress; ?>
