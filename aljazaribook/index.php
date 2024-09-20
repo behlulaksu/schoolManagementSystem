@@ -113,19 +113,20 @@ if ($current_user_now->roles[0] === 'student') {
                                     foreach ($lessons[$teacherId] as $key => $lesson) {
                                         $lesson_idler_gecici[0][$key] = $lesson['lesson_id'];
                                         $lesson_idler_gecici[1][$key] = $lesson['subject'];
+                                        $lesson_idler_gecici[2][$key] = $lesson['class'];
 
-                                        foreach ($classes[0] as $keyl => $valuel) {
-                                            $classIds = explode(',', $lesson['class']);
+                                        // foreach ($classes[0] as $keyl => $valuel) {
+                                        //     $classIds = explode(',', $lesson['class']);
 
-                                            foreach ($classIds as $classId) {
-                                                $classId = trim($classId); 
+                                        //     foreach ($classIds as $classId) {
+                                        //         $classId = trim($classId); 
 
-                                                if ($classId == $classes[0][$keyl]) {
-                                                    $lesson_idler_gecici[2][$key] = $classes[1][$keyl];
-                                                    break; 
-                                                }
-                                            }
-                                        }
+                                        //         if ($classId == $classes[0][$keyl]) {
+                                        //             $lesson_idler_gecici[2][$key] = $classes[1][$keyl];
+                                        //             break; 
+                                        //         }
+                                        //     }
+                                        // }
                                     }
                                 }
 
@@ -160,9 +161,17 @@ if ($current_user_now->roles[0] === 'student') {
                                 if (!empty($lesson_idler)) {
                                     ?>
                                     <div class="card dark:bg-zinc-800 dark:border-zinc-600">
-                                        <div class="card-body pb-0">
+                                        <div class="card-body pb-0 flex items-center justify-between">
                                             <h6 class="mb-1 text-15 text-gray-700 dark:text-gray-100">
                                                 <?php echo $calendar_name; ?>
+                                            </h6>
+                                            <h6>
+                                                <?php  
+                                                date_default_timezone_set('Europe/Istanbul');
+                                                $bugun = date('l');
+                                                echo $bugun;
+                                                $su_an = date('H:i');
+                                                ?>
                                             </h6>
                                         </div>
                                         <div class="card-body"> 
@@ -174,19 +183,74 @@ if ($current_user_now->roles[0] === 'student') {
                                                                 Period
                                                             </th>
                                                             <th scope="col" class="merkeze_al px-1 py-1 border-l border-gray-50 dark:border-zinc-600">
-                                                                Monday
+                                                                <div>
+                                                                    Monday
+                                                                </div>
+                                                                <?php  
+                                                                if ($bugun === "Monday") {
+                                                                    ?>
+                                                                    <button type="button" class="btn text-white bg-green-500 border-green-500 hover:bg-green-600 hover:border-green-600 focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-500/30 active:bg-green-600 active:border-green-600" style="padding: 3px 15px;">
+                                                                        <i class="bx bx-down-arrow-alt text-16 align-middle" style="font-size: 20px !important;"></i>
+                                                                    </button>
+                                                                    <?php 
+                                                                }
+                                                                ?>
                                                             </th>
                                                             <th scope="col" class="merkeze_al px-1 py-1 border-l border-gray-50 dark:border-zinc-600">
-                                                                Tuesday
+                                                                <div>
+                                                                    Tuesday
+                                                                </div>
+                                                                <?php  
+                                                                if ($bugun === "Tuesday") {
+                                                                    ?>
+                                                                    <button type="button" class="btn text-white bg-green-500 border-green-500 hover:bg-green-600 hover:border-green-600 focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-500/30 active:bg-green-600 active:border-green-600" style="padding: 3px 15px;">
+                                                                        <i class="bx bx-down-arrow-alt text-16 align-middle" style="font-size: 20px !important;"></i>
+                                                                    </button>
+                                                                    <?php 
+                                                                }
+                                                                ?>
                                                             </th>
                                                             <th scope="col" class="merkeze_al px-1 py-1 border-l border-gray-50 dark:border-zinc-600">
-                                                                Wednesday
+                                                                <div>
+                                                                    Wednesday
+                                                                </div>
+                                                                <?php  
+                                                                if ($bugun === "Wednesday") {
+                                                                    ?>
+                                                                    <button type="button" class="btn text-white bg-green-500 border-green-500 hover:bg-green-600 hover:border-green-600 focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-500/30 active:bg-green-600 active:border-green-600" style="padding: 3px 15px;">
+                                                                        <i class="bx bx-down-arrow-alt text-16 align-middle" style="font-size: 20px !important;"></i>
+                                                                    </button>
+                                                                    <?php 
+                                                                }
+                                                                ?>
                                                             </th>
                                                             <th scope="col" class="merkeze_al px-1 py-1 border-l border-gray-50 dark:border-zinc-600">
-                                                                Thursday
+                                                                <div>
+                                                                    Thursday
+                                                                </div>
+                                                                <?php  
+                                                                if ($bugun === "Thursday") {
+                                                                    ?>
+                                                                    <button type="button" class="btn text-white bg-green-500 border-green-500 hover:bg-green-600 hover:border-green-600 focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-500/30 active:bg-green-600 active:border-green-600" style="padding: 3px 15px;">
+                                                                        <i class="bx bx-down-arrow-alt text-16 align-middle" style="font-size: 20px !important;"></i>
+                                                                    </button>
+                                                                    <?php 
+                                                                }
+                                                                ?>
                                                             </th>
                                                             <th scope="col" class="merkeze_al px-1 py-1 border-l border-gray-50 dark:border-zinc-600">
-                                                                Friday
+                                                                <div>
+                                                                    Friday
+                                                                </div>
+                                                                <?php  
+                                                                if ($bugun === "Friday") {
+                                                                    ?>
+                                                                    <button type="button" class="btn text-white bg-green-500 border-green-500 hover:bg-green-600 hover:border-green-600 focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-500/30 active:bg-green-600 active:border-green-600" style="padding: 3px 15px;">
+                                                                        <i class="bx bx-down-arrow-alt text-16 align-middle" style="font-size: 20px !important;"></i>
+                                                                    </button>
+                                                                    <?php 
+                                                                }
+                                                                ?>
                                                             </th>
                                                         </tr>
                                                     </thead>
@@ -258,11 +322,28 @@ if ($current_user_now->roles[0] === 'student') {
                                                                         if ($lesson_idler[3][$a] === "Thursday") {
                                                                             $dizi = ((int)$lesson_idler[4][$a]);
                                                                             if ($dizi == $i) {
-                                                                                echo $lesson_idler[2][$a];
+                                                                                $array = explode(",", $lesson_idler[2][$a]);
+                                                                                foreach ($array as $keyar => $valuear) {
+                                                                                    
+                                                                                }
                                                                                 echo "<br>";
                                                                                 echo $lesson_idler[1][$a];
                                                                             }
                                                                         }
+                                                                    }
+
+                                                                    if ($bugun === "Thursday" && $su_an >= $periods[1][$i] && $su_an <= $periods[2][$i]) {
+                                                                        ?>
+                                                                        <br>
+                                                                        <a href="">
+                                                                            <button type="button" class="btn border-0 bg-red-500 p-0 align-middle text-white focus:ring-2 focus:ring-red-500/30 hover:bg-red-600">
+                                                                                <i class="bx bx-list-ul bg-white bg-opacity-20 w-10 h-full text-16 py-3 align-middle rounded-l"></i>
+                                                                                <span class="px-3 leading-[2.8]">
+                                                                                    Attendance
+                                                                                </span>
+                                                                            </button>
+                                                                        </a>
+                                                                        <?php 
                                                                     }
                                                                     ?>
                                                                 </td>

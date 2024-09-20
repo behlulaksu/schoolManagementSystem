@@ -3,7 +3,7 @@
 <?php 
 global $wpdb;
 $book_objective = "user_login_logs";
-$query = $wpdb->prepare("SELECT * from $book_objective");
+$query = $wpdb->prepare("SELECT * from $book_objective where user_id != 1");
 $sonuclar = $wpdb->get_results($query);
 ?>
 

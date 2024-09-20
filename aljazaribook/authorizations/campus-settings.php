@@ -182,13 +182,14 @@
 															);
 															$users = get_users($args);
 															foreach ($users as $key => $value) {
+																$asc_time_table_id = get_field('asc_time_table_id', 'user_' .$value->data->ID);
 																?>
 																<tr class="bg-white border-b border-gray-50 dark:bg-zinc-700 dark:border-zinc-600">
 																	<th scope="row" class="px-6 py-3.5">
 																		<?php echo $value->data->display_name; ?>
 																	</th>
 																	<td class="px-6 py-3.5">
-																		<input user_system_id="<?php echo $value->data->ID; ?>" type="text" class="system_id_save border border-gray-100 text-gray-900 text-sm rounded focus:ring-violet-100 focus:border-violet-500 block w-full dark:bg-zinc-700/50 dark:border-zinc-600 dark:placeholder:text-zinc-100/60 dark:text-zinc-100"  value="<?php echo $asc_time_table_id = get_field('asc_time_table_id', 'user_' .$value->data->ID); ?>">
+																		<input user_system_id="<?php echo $value->data->ID; ?>" type="text" class="system_id_save border border-gray-100 text-gray-900 text-sm rounded focus:ring-violet-100 focus:border-violet-500 block w-full dark:bg-zinc-700/50 dark:border-zinc-600 dark:placeholder:text-zinc-100/60 dark:text-zinc-100 <?php if(!empty($asc_time_table_id)){echo "yesil_arka_plan";} ?>"  value="<?php echo $asc_time_table_id; ?>">
 																	</td>
 																</tr>
 																<?php 
@@ -289,20 +290,38 @@
 														<tbody>
 															<?php  
 															$args = array(
-																'role__not_in' => ['student','administrator']
+																'post_type' => 'user_groups',
+																'posts_per_page' => -1,
+																'orderby' => 'id',
+																'order' => "ASC"
 															);
-															$users = get_users($args);
-															foreach ($users as $key => $value) {
-																?>
-																<tr class="bg-white border-b border-gray-50 dark:bg-zinc-700 dark:border-zinc-600">
-																	<th scope="row" class="px-6 py-3.5">
-																		<?php echo $value->data->display_name; ?>
-																	</th>
-																	<td class="px-6 py-3.5">
-																		<input user_system_id="<?php echo $value->data->ID; ?>" type="text" class="system_id_save border border-gray-100 text-gray-900 text-sm rounded focus:ring-violet-100 focus:border-violet-500 block w-full dark:bg-zinc-700/50 dark:border-zinc-600 dark:placeholder:text-zinc-100/60 dark:text-zinc-100"  value="<?php echo $asc_time_table_id = get_field('asc_time_table_id', 'user_' .$value->data->ID); ?>">
-																	</td>
-																</tr>
-																<?php 
+
+															$my_posts = new WP_Query($args);
+															if ($my_posts->have_posts()) {
+																while ($my_posts->have_posts()) {
+																	$my_posts->the_post();
+																	$categoryID = get_the_id(); 
+																	/************************************/  
+																	$class_asc_id = get_field("class_asc_id",$categoryID)
+																	?>
+																	<tr class="bg-white border-b border-gray-50 dark:bg-zinc-700 dark:border-zinc-600">
+																		<th scope="row" class="px-6 py-3.5">
+																			<?php echo get_the_title(); ?> 
+																			<?php  
+																			$sub_class = get_field("sub_class",$categoryID);
+																			if ($sub_class != "No") {
+																				?>
+																				<span style="color: red;">(Sub Class)</span>
+																				<?php 
+																			}
+																			?>
+																		</th>
+																		<td class="px-6 py-3.5">
+																			<input class_system_id="<?php echo $categoryID; ?>" type="text" class="system_class_id_save border border-gray-100 text-gray-900 text-sm rounded focus:ring-violet-100 focus:border-violet-500 block w-full dark:bg-zinc-700/50 dark:border-zinc-600 dark:placeholder:text-zinc-100/60 dark:text-zinc-100 <?php if(!empty($class_asc_id)){echo "yesil_arka_plan";} ?>"  value="<?php echo $class_asc_id; ?>" placeholder="if you have more than one, use ',' for separate them." >
+																		</td>
+																	</tr>
+																	<?php 
+																}
 															}
 															?>
 														</tbody>
@@ -339,7 +358,8 @@
 
 <style>
 	.yesil_arka_plan{
-		background-color: yellow !important;
+		background-color: green !important;
+		color: #fff !important;
 	}
 	.system_id_save{
 		padding: initial;
@@ -426,6 +446,7 @@
 		$('.system_id_save').on('change', function() {
 			user_system_id = $(this).attr("user_system_id");
 			user_asc_id = $(this).val();
+			erisilen_dom = $(this);
 
 			var value = $.ajax({
 				method: "POST",
@@ -436,11 +457,30 @@
 				}),
 				success: function(data){
 					console.log(data);
-					$(this).addClass('yesil_arka_plan');
+					erisilen_dom.addClass('yesil_arka_plan');
+				}
 
-					setTimeout(function() {
-						$(this).removeClass('yesil_arka_plan');
-					}, 2000);
+			});
+
+		});
+
+
+
+		$('.system_class_id_save').on('change', function() {
+			class_system_id = $(this).attr("class_system_id");
+			class_asc_id = $(this).val();
+			erisilen_dom = $(this);
+
+			var value = $.ajax({
+				method: "POST",
+				url: get_site_url+'/wp-admin/admin-ajax.php',
+				data: ({action:'my_ajax_class_asc_id',
+					class_system_id:class_system_id,
+					class_asc_id:class_asc_id,
+				}),
+				success: function(data){
+					console.log(data);
+					erisilen_dom.addClass('yesil_arka_plan');
 				}
 
 			});

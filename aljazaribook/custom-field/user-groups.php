@@ -156,6 +156,26 @@ if( function_exists('acf_add_local_field_group') ):
 				'layout' => 'vertical',
 				'save_other_choice' => 0,
 			),
+			array(
+				'key' => 'field_66ebfdd9cda6a',
+				'label' => 'Class ASC ID',
+				'name' => 'class_asc_id',
+				'aria-label' => '',
+				'type' => 'text',
+				'instructions' => '',
+				'required' => 0,
+				'conditional_logic' => 0,
+				'wrapper' => array(
+					'width' => '',
+					'class' => '',
+					'id' => '',
+				),
+				'default_value' => '',
+				'maxlength' => '',
+				'placeholder' => '',
+				'prepend' => '',
+				'append' => '',
+			),
 		),
 		'location' => array(
 			array(
