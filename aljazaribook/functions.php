@@ -263,4 +263,33 @@ function main_panel_edit(){
 	/******************* Objectives *******************/
 	include('functions/objectives-function.php');
 
+
+
+	function get_title_by_meta($key, $value){
+		$deger = "";
+
+		$meta_key = $key;  
+		$meta_value = $value; 
+
+		$args = array(
+			'post_type'  => 'user_groups', 
+			'meta_key'   => $meta_key,
+			'meta_value' => $meta_value,
+		);
+
+		$query = new WP_Query( $args );
+
+		if ( $query->have_posts() ) {
+			while ( $query->have_posts() ) {
+				$query->the_post();
+				$deger = get_the_title(); 
+			}
+		} else {
+			$deger = "---";
+		}
+
+		return $deger;
+
+	}
+
 ?>
