@@ -265,8 +265,8 @@ function main_panel_edit(){
 
 
 
-	function get_title_by_meta($key, $value){
-		$deger = "";
+	function get_title_by_meta($key, $value, $subject){
+		$deger = [];
 
 		$meta_key = $key;  
 		$meta_value = $value; 
@@ -282,10 +282,11 @@ function main_panel_edit(){
 		if ( $query->have_posts() ) {
 			while ( $query->have_posts() ) {
 				$query->the_post();
-				$deger = get_the_title(); 
+				$deger[0] = get_the_title(); 
+				$deger[1] = get_the_id(); 
 			}
 		} else {
-			$deger = "---";
+			$deger = "";
 		}
 
 		return $deger;

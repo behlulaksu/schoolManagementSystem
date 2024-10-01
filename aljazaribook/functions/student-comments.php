@@ -169,6 +169,7 @@ function my_ajax_new_counsilling_note(){
 	$visivle_type = $_REQUEST["visivle_type"];
 	$private_type = $_REQUEST["private_type"];
 	$counselling_note = $_REQUEST["counselling_note"];
+	$counselling_time = $_REQUEST["counselling_time"];
 	$stundet_id = $_REQUEST["stundet_id"];
 	$blog_id = get_current_blog_id();
 
@@ -182,6 +183,7 @@ function my_ajax_new_counsilling_note(){
 		'teacher_ip' => $ip,
 		'update_time' => $registertime,
 		'update_date' => $registerdate,
+		'targete_day' => $counselling_time,
 		'note_type' => $note_type,
 		'interview' => $interviewed,
 		'visible' => $visivle_type,

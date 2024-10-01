@@ -57,8 +57,11 @@ $results = $wpdb->get_results(
 		$blog_id
 	)
 );
-?>
 
+
+$group_users = get_field("group_users",$group); 
+$how_much_user = count($group_users);
+?>
 
 
 <div class="main-content">
@@ -264,7 +267,7 @@ $results = $wpdb->get_results(
 																	<button lesson_id="<?= $curriculum['id']; ?>" type="button" class="btn py-2.5 dropdown-toggle border shadow-md shadow-sky-100 dark:shadow-zinc-600 bg-sky-500 border-sky-500 text-white font-medium leading-tight hover:bg-sky-600 focus:ring focus:ring-sky-200 focus:bg-sky-600 dark:focus:ring-sky-500/30 focus:outline-none transition duration-150 ease-in-out" data-tw-toggle="modal" data-tw-target="#lesson_resources">
 																		Resources
 																	</button>
-																	<button lesson_id="<?= $curriculum['id']; ?>" type="button" class="btn py-2.5 dropdown-toggle border shadow-md shadow-gray-100 dark:shadow-zinc-600 bg-gray-500 border-gray-500 text-white font-medium leading-tight hover:bg-gray-600 focus:ring focus:ring-gray-200 focus:bg-gray-600 dark:focus:ring-gray-500/30 focus:outline-none transition duration-150 ease-in-out">
+																	<button lesson_id="<?= $curriculum['id']; ?>" type="button" class="btn py-2.5 dropdown-toggle border shadow-md shadow-gray-100 dark:shadow-zinc-600 bg-gray-500 border-gray-500 text-white font-medium leading-tight hover:bg-gray-600 focus:ring focus:ring-gray-200 focus:bg-gray-600 dark:focus:ring-gray-500/30 focus:outline-none transition duration-150 ease-in-out" data-tw-toggle="modal" data-tw-target="#modal-idextralargemodal">
 																		Assessment
 																	</button>
 																	<button lesson_id="<?= $curriculum['id']; ?>" type="button" class="btn text-neutral-500 hover:text-white border-neutral-800 hover:bg-neutral-900 hover:border-neutral-900 focus:bg-neutral-900 focus:text-white focus:border-neutral-900 focus:ring focus:ring-neutral-500/30 active:bg-neutral-900 active:border-neutral-900" data-tw-toggle="modal" data-tw-target="#lesson_objective_shows">
@@ -469,7 +472,7 @@ $results = $wpdb->get_results(
 																	<button lesson_id="<?= $curriculum['id']; ?>" type="button" class="btn py-2.5 dropdown-toggle border shadow-md shadow-sky-100 dark:shadow-zinc-600 bg-sky-500 border-sky-500 text-white font-medium leading-tight hover:bg-sky-600 focus:ring focus:ring-sky-200 focus:bg-sky-600 dark:focus:ring-sky-500/30 focus:outline-none transition duration-150 ease-in-out" data-tw-toggle="modal" data-tw-target="#lesson_resources">
 																		Resources
 																	</button>
-																	<button lesson_id="<?= $curriculum['id']; ?>" type="button" class="btn py-2.5 dropdown-toggle border shadow-md shadow-gray-100 dark:shadow-zinc-600 bg-gray-500 border-gray-500 text-white font-medium leading-tight hover:bg-gray-600 focus:ring focus:ring-gray-200 focus:bg-gray-600 dark:focus:ring-gray-500/30 focus:outline-none transition duration-150 ease-in-out">
+																	<button lesson_id="<?= $curriculum['id']; ?>" type="button" class="btn py-2.5 dropdown-toggle border shadow-md shadow-gray-100 dark:shadow-zinc-600 bg-gray-500 border-gray-500 text-white font-medium leading-tight hover:bg-gray-600 focus:ring focus:ring-gray-200 focus:bg-gray-600 dark:focus:ring-gray-500/30 focus:outline-none transition duration-150 ease-in-out" data-tw-toggle="modal" data-tw-target="#modal-idextralargemodal">
 																		Assessment
 																	</button>
 																	<button lesson_id="<?= $curriculum['id']; ?>" type="button" class="btn text-neutral-500 hover:text-white border-neutral-800 hover:bg-neutral-900 hover:border-neutral-900 focus:bg-neutral-900 focus:text-white focus:border-neutral-900 focus:ring focus:ring-neutral-500/30 active:bg-neutral-900 active:border-neutral-900" data-tw-toggle="modal" data-tw-target="#lesson_objective_shows">
@@ -517,7 +520,89 @@ $results = $wpdb->get_results(
 		</div>
 	</div>
 </div>
-
+<script>
+	student_id = [];
+</script>
+<div class="modal relative z-50 hidden" id="modal-idextralargemodal" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+	<div class="fixed inset-0 z-50 overflow-y-auto">
+		<div class="absolute inset-0 bg-black bg-opacity-50 transition-opacity modal-overlay"></div>
+		<div class="animate-translate p-4 sm:max-w-4xl mx-auto">
+			<div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all dark:bg-zinc-600">
+				<div class="bg-white dark:bg-zinc-700">
+					<div class="flex items-center p-4 border-b rounded-t border-gray-50 dark:border-zinc-600">
+						<h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 ">
+							ASST <span style="color: red;" id="assessment_title"></span>
+						</h3>
+						<button class="btn text-gray-400 border-transparent hover:bg-gray-50/50 hover:text-gray-900 dark:text-gray-100 rounded-lg text-sm px-2 py-1 ltr:ml-auto rtl:mr-auto inline-flex items-center dark:hover:bg-zinc-600" type="button" data-tw-dismiss="modal">
+							<i class="mdi mdi-close  text-xl text-gray-500 dark:text-zinc-100/60"></i>
+						</button>
+					</div>
+					<div class="p-6 space-y-6 ltr:text-left rtl:text-right">
+						<!-- butun content buraya gelecek -->
+						<div class="relative overflow-x-auto" style="overflow-y: scroll; height: 55vh;">
+							<table class="w-full text-sm text-left text-gray-500 ">
+								<thead class="text-sm text-gray-700 dark:text-gray-100 bg-gray-50 dark:bg-zinc-600">
+									<tr style="background-color: #8f1537; color: rgb(215,154,42,1.0) !important;">
+										<th scope="col" class="px-6 py-3 border-l border-gray-50 dark:border-zinc-600" style="text-align: center;">
+											Student Number
+										</th>
+										<th scope="col" class="px-6 py-3 border-l border-gray-50 dark:border-zinc-600" style="text-align: center;">
+											Student Name
+										</th>
+										<th scope="col" class="px-6 py-3 border-l border-gray-50 dark:border-zinc-600" style="text-align: center;">
+											Mark
+										</th>
+										<th scope="col" class="px-6 py-3 border-l border-gray-50 dark:border-zinc-600" style="text-align: center;">
+											Teacher ID
+										</th>
+										<th scope="col" class="px-6 py-3 border-l border-gray-50 dark:border-zinc-600" style="text-align: center;">
+											Date & Time
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php  
+									if (!empty($group_users)){
+										foreach ($group_users as $key => $value){
+											?>
+											<script>
+												student_id[<?php echo $key; ?>] = <?php echo $value['ID']; ?>;
+											</script>
+											<tr class="bg-white border-b border-gray-50 dark:bg-zinc-700 dark:border-zinc-600">
+												<th style="text-align: center;" scope="row" class="px-6 py-3.5 border-l border-gray-50 dark:border-zinc-600 dark:text-zinc-100">
+													<?php echo get_field('school_no', 'user_'.$value['ID']); ?>
+												</th>
+												<th style="text-align: center;" scope="row" class="px-6 py-3.5 border-l border-gray-50 dark:border-zinc-600 dark:text-zinc-100">
+													<?php echo $value['display_name']; ?>
+												</th>
+												<td style="text-align: center;" class="student_mark px-6 py-3.5 border-l border-gray-50 dark:border-zinc-600 dark:text-zinc-100">
+													<input value="" class="student_point w-full rounded border-gray-100 placeholder:text-sm focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:border-zinc-600 dark:placeholder:text-zinc-100 dark:text-zinc-100" type="number" max="10" placeholder="Max 10" id="id_of_point" point_student_id="<?php echo $value['ID']; ?>">
+												</td>
+												<td style="text-align: center;" teacher_id="<?php echo $value['ID']; ?>" class="px-6 py-3.5 border-l border-gray-50 dark:border-zinc-600 dark:text-zinc-100"></td>
+												<td style="text-align: center;" style="text-align: center;" data_id="<?php echo $value['ID']; ?>" class="px-6 py-3.5 border-l border-gray-50 dark:border-zinc-600 dark:text-zinc-100"></td>
+											</tr>
+											<?php 
+										}
+									}
+									?>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<!-- Modal footer -->
+					<div class="flex items-center p-5 gap-3 space-x-2 border-t rounded-b border-gray-50 dark:border-zinc-600">
+						<button id="save_marks" type="button" class="btn inline-flex w-full justify-center rounded-md border border-transparent bg-green-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 sm:w-auto sm:text-sm">
+							Save
+						</button>
+						<button type="button" class="btn inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 dark:text-gray-100 shadow-sm hover:bg-gray-50/50 focus:outline-none focus:ring-2 focus:ring-gray-500/30 sm:mt-0 sm:w-auto sm:text-sm dark:bg-zinc-700 dark:border-zinc-600 dark:hover:bg-zinc-600 dark:focus:bg-zinc-600 dark:focus:ring-zinc-700 dark:focus:ring-gray-500/20" data-tw-dismiss="modal">
+							Cancel
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 <div class="modal relative z-50 hidden" id="list_order_1" aria-labelledby="modal-title" role="dialog" aria-modal="true">
 	<div class="fixed inset-0 z-50 overflow-hidden">
 		<div class="absolute inset-0 bg-black bg-opacity-50 transition-opacity modal-overlay"></div>
@@ -913,8 +998,12 @@ $results = $wpdb->get_results(
 										<option value="8">8</option>
 										<option value="9">9</option>
 										<option value="10">10</option>
-										<option value="11">11</option>
-										<option value="12">12</option>
+										<option value="Who We Are">Who We Are</option>
+										<option value="Where We Are in Place and Time">Where We Are in Place and Time</option>
+										<option value="How We Express Ourselves">How We Express Ourselves</option>
+										<option value="How the World Works">How the World Works</option>
+										<option value="How We Organize Ourselves">How We Organize Ourselves</option>
+										<option value="Sharing the Planet">Sharing the Planet</option>
 									</select>
 								</div>
 								<hr class="mt-3">
@@ -1013,8 +1102,12 @@ $results = $wpdb->get_results(
 										<option value="8">8</option>
 										<option value="9">9</option>
 										<option value="10">10</option>
-										<option value="11">11</option>
-										<option value="12">12</option>
+										<option value="Who We Are">Who We Are</option>
+										<option value="Where We Are in Place and Time">Where We Are in Place and Time</option>
+										<option value="How We Express Ourselves">How We Express Ourselves</option>
+										<option value="How the World Works">How the World Works</option>
+										<option value="How We Organize Ourselves">How We Organize Ourselves</option>
+										<option value="Sharing the Planet">Sharing the Planet</option>
 									</select>
 								</div>
 								<div class="mt-3">
@@ -1227,6 +1320,135 @@ $results = $wpdb->get_results(
 <script src="<?php echo get_template_directory_uri(); ?>/assets/js/pages/datatables.init.js"></script> 
 
 <script>
+	group = <?php echo $group; ?>;
+	subject = <?php echo $subject; ?>;
+
+	$("#save_marks").click(function(){
+		/*General Information*/
+		group = <?php echo $group; ?>;
+		subject = <?php echo $subject; ?>;
+
+		/*Student Information*/
+		student_point = [];
+		student_list = $(".student_mark").find(".student_point");
+		for (var i = student_list.length - 1; i >= 0; i--) {
+			student_point[i] = student_list[i].value;
+		}
+
+
+		console.log(lesson_id);
+
+		var value = $.ajax({
+			method: "POST",
+			url: get_site_url+'/wp-admin/admin-ajax.php',
+			data: ({action:'my_ajax_save_object_mark',
+
+				group:group,
+				subject:subject,
+				lesson_id:lesson_id,
+
+				student_id:student_id,
+				student_point:student_point,
+
+
+			}),
+			success: function(data){
+				console.log(data);
+				if (data.data != "problem") {
+					Swal.fire(
+					{
+						title: 'Marking Saved',
+						text: '',
+						icon: 'success',
+						showCancelButton: false,
+						confirmButtonColor: '#8f1537',
+					}
+					)
+				}else{
+					console.log(data.data);
+					Swal.fire({
+						title: "Didn't Work",
+						text: "It looks like you didn't enter any notes to save.",
+						icon: "warning",
+						showCancelButton: false,
+						confirmButtonColor: "#8f1537",
+					})
+				}
+			}
+
+		});
+
+
+	});
+
+
+	$(".transition-opacity").on('click',
+		()=>{
+			student_list = $(".student_mark").find(".student_point");
+			for (var i = student_list.length - 1; i >= 0; i--) {
+				student_list[i].value = "";
+			}
+		});
+
+
+	$('[data-tw-dismiss="modal"]').on('click', function() {
+		student_list = $(".student_mark").find(".student_point");
+		for (var i = student_list.length - 1; i >= 0; i--) {
+			student_list[i].value = "";
+		}
+	});
+	
+	how_much_users = <?php echo $how_much_user; ?>;
+	$('[data-tw-target="#modal-idextralargemodal"]').on('click', function() {
+		lesson_id = $(this).attr("lesson_id");
+		hedef = $(this);
+		$("#assessment_title").text(hedef.parent().parent().find("strong").text());
+
+		var values = $.ajax({
+			method: "POST",
+			url: get_site_url+'/wp-admin/admin-ajax.php',
+			data: ({action:'my_ajax_get_object_asst',
+
+				group:group,
+				subject:subject,
+				lesson_id:lesson_id,
+
+			}),
+			success: function(baska){
+				console.log(baska);
+				if (baska.data.length === 0) {
+					for (var i = 0; i < how_much_users; i++) {
+						$("[point_student_id]").val("");
+						$("[teacher_id]").text("");
+						$("[data_id]").text("");
+					}
+				}else{
+					for (var i = 0; i < how_much_users; i++) {
+						$("[point_student_id='"+baska.data[i]['gb_student_id']+"']").val(baska.data[i]['gb_point']);
+						$("[teacher_id='"+baska.data[i]['gb_student_id']+"']").text(baska.data[i]['gb_teacher_id']);
+						$("[data_id='"+baska.data[i]['gb_student_id']+"']").text(baska.data[i]['gb_update_date']+" "+baska.data[i]['gb_update_time']);
+					}
+				}
+
+			}
+
+		});
+
+	});
+
+	inputElement = $('.student_point');
+
+	inputElement.on('input change', function() {
+		const inputValue = event.target.value;
+
+		const maxValue = $(this).attr("max");
+
+		if (parseFloat(inputValue) > maxValue) {
+			event.target.value = maxValue; 
+		} 
+	});
+
+
 	$(".delete_lesson").click(function () {
 		delete_lesson_id = $(this).attr("lesson_id");
 		Swal.fire({

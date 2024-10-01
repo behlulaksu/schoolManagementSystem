@@ -86,7 +86,7 @@ if (isset($_GET['group'])){
 							Date & Time
 						</th>
 						<th class="p-4 pr-8 border border-y-2 border-gray-50 dark:border-zinc-600 border-l-0">
-							Name Surname
+							Teacher
 						</th>
 						<th class="p-4 pr-8 border border-y-2 border-gray-50 dark:border-zinc-600 border-l-0">
 							Note Type
@@ -144,6 +144,10 @@ if (isset($_GET['group'])){
 						?>
 						<tr>
 							<td class="p-4 pr-8 border rtl:border-l-0 border-t-0 border-gray-50 dark:border-zinc-600">
+								<span style="color: red; font-weight: bold; ">
+									<?php echo $value->targete_day; ?>
+								</span>
+								<hr>
 								<?php echo $value->update_date; ?> <br>
 								<?php echo $value->update_time; ?>
 							</td>
@@ -236,6 +240,10 @@ if (isset($_GET['group'])){
 									<?php echo $value->id; ?>
 								</td>
 								<td class="p-4 pr-8 border rtl:border-l-0 border-t-0 border-gray-50 dark:border-zinc-600">
+									<span style="color: red; font-weight: bold; ">
+										<?php echo $value->targete_day; ?>
+									</span>
+									<hr>
 									<?php echo $value->update_date; ?> <br>
 									<?php echo $value->update_time; ?>
 								</td>
@@ -297,44 +305,54 @@ if (isset($_GET['group'])){
 						<h3 class="mb-4 text-xl font-medium text-gray-700 dark:text-gray-100">
 							<?php echo $current_user_edit_meta['first_name'][0]; ?> <?php echo $current_user_edit_meta['last_name'][0]; ?>
 						</h3>
-						<div class="mb-3">
-							<label class="block font-medium text-gray-700 dark:text-zinc-100 mb-2">Select Note Type</label>
-							<select id="note_type" class="dark:bg-zinc-800 dark:border-zinc-700 w-full rounded border-gray-100 py-2.5 text-sm text-gray-500 focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:text-zinc-100">
-								<option value="Information note">Information note</option>
-								<option value="Counsellor Opinion">Counsellor Opinion</option>
-								<option value="Teacher Opinion">Teacher Opinion</option>
-								<option value="Assist. Director Opinion">Assist. Director Opinion</option>
-								<option value="Director Opinion">Director Opinion</option>
-								<option value="Information note">Information note</option>
-							</select>
+						<div class="mb-3" style="display: flex; justify-content: space-between;">
+							<div style="width: 48%;">
+								<label class="block font-medium text-gray-700 dark:text-zinc-100 mb-2">Select Private</label>
+								<select id="private_type" class="dark:bg-zinc-800 dark:border-zinc-700 w-full rounded border-gray-100 py-2.5 text-sm text-gray-500 focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:text-zinc-100">
+									<option value="Non Private">Non Private</option>
+									<option value="Private">Private</option>
+								</select>
+							</div>
+							<div style="width: 48%;">
+								<label class="block font-medium text-gray-700 dark:text-zinc-100 mb-2">Select Note Type</label>
+								<select id="note_type" class="dark:bg-zinc-800 dark:border-zinc-700 w-full rounded border-gray-100 py-2.5 text-sm text-gray-500 focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:text-zinc-100">
+									<option value="Information note">Information note</option>
+									<option value="Counsellor Opinion">Counsellor Opinion</option>
+									<option value="Teacher Opinion">Teacher Opinion</option>
+									<option value="Assist. Director Opinion">Assist. Director Opinion</option>
+									<option value="Director Opinion">Director Opinion</option>
+									<option value="Information note">Information note</option>
+								</select>
+							</div>
+						</div>
+						<div class="mb-3" style="display: flex; justify-content: space-between;">
+							<div style="width: 48%;">
+								<label class="block font-medium text-gray-700 dark:text-zinc-100 mb-2">Select Interviewed</label>
+								<select id="interviewed" class="dark:bg-zinc-800 dark:border-zinc-700 w-full rounded border-gray-100 py-2.5 text-sm text-gray-500 focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:text-zinc-100">
+									<option value="Student">Student</option>
+									<option value="Parent">Parent</option>
+									<option value="All">All</option>
+								</select>
+							</div>
+							<div style="width: 48%;">
+								<label class="block font-medium text-gray-700 dark:text-zinc-100 mb-2">Select Visible</label>
+								<select id="visivle_type" class="dark:bg-zinc-800 dark:border-zinc-700 w-full rounded border-gray-100 py-2.5 text-sm text-gray-500 focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:text-zinc-100">
+									<option value="None">None</option>
+									<option value="Student">Student</option>
+									<option value="Teachers">Teachers</option>
+									<option value="All">All</option>
+								</select>
+							</div>
 						</div>
 						<div class="mb-3">
-							<label class="block font-medium text-gray-700 dark:text-zinc-100 mb-2">Select Interviewed</label>
-							<select id="interviewed" class="dark:bg-zinc-800 dark:border-zinc-700 w-full rounded border-gray-100 py-2.5 text-sm text-gray-500 focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:text-zinc-100">
-								<option value="Student">Student</option>
-								<option value="Parent">Parent</option>
-								<option value="All">All</option>
-							</select>
-						</div>
-						<div class="mb-3">
-							<label class="block font-medium text-gray-700 dark:text-zinc-100 mb-2">Select Visible</label>
-							<select id="visivle_type" class="dark:bg-zinc-800 dark:border-zinc-700 w-full rounded border-gray-100 py-2.5 text-sm text-gray-500 focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:text-zinc-100">
-								<option value="None">None</option>
-								<option value="Student">Student</option>
-								<option value="Teachers">Teachers</option>
-								<option value="All">All</option>
-							</select>
-						</div>
-						<div class="mb-3">
-							<label class="block font-medium text-gray-700 dark:text-zinc-100 mb-2">Select Private</label>
-							<select id="private_type" class="dark:bg-zinc-800 dark:border-zinc-700 w-full rounded border-gray-100 py-2.5 text-sm text-gray-500 focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:text-zinc-100">
-								<option value="Non Private">Non Private</option>
-								<option value="Private">Private</option>
-							</select>
+							<label for="example-text-input" class="block font-medium text-gray-700 dark:text-gray-100 mb-2">
+								Counselling Time
+							</label>
+							<input class="w-full rounded border-gray-100 py-2.5 text-sm text-gray-500 focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:border-zinc-600 dark:text-zinc-100" type="datetime-local" id="counselling_time">
 						</div>
 						<div class="mb-3">
 							<label class="block font-medium text-gray-700 dark:text-zinc-100 mb-2">Counselling Note</label>
-							<textarea id="counselling_note" class="dark:bg-zinc-800 dark:border-zinc-700 w-full rounded border-gray-100 py-2.5 text-sm text-gray-500 focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:text-zinc-100"></textarea>
+							<textarea rows="8" id="counselling_note" class="dark:bg-zinc-800 dark:border-zinc-700 w-full rounded border-gray-100 py-2.5 text-sm text-gray-500 focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:text-zinc-100"></textarea>
 						</div>
 
 						<div class="mt-6">
@@ -466,6 +484,7 @@ if (isset($_GET['group'])){
 			visivle_type = $("#visivle_type").val();
 			private_type = $("#private_type").val();
 			counselling_note = $("#counselling_note").val();
+			counselling_time = $("#counselling_time").val();
 			alert_message = "You will be adding new comment as Note Type: '"+note_type+"', Visible: '"+visivle_type+"' and Private: '"+private_type+"'";
 
 			if (counselling_note != "") {
@@ -488,6 +507,7 @@ if (isset($_GET['group'])){
 								visivle_type:visivle_type,
 								private_type:private_type,
 								counselling_note:counselling_note,
+								counselling_time:counselling_time,
 								stundet_id:<?php echo $student; ?>,
 							}),
 							success: function(data){

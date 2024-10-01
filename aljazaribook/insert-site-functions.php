@@ -43,6 +43,36 @@ function create_table() {
 	}
 
 
+	foreach ($variable as $key => $value) {
+		$table_name = $wpdb->prefix .$value->blog_id.'_'.'object_asset';
+
+		$query = $wpdb->prepare( 'SHOW TABLES LIKE', $wpdb->esc_like( $table_name ) );
+
+		if ( ! $wpdb->get_var( $query ) == $table_name ) {
+
+			$sql = "CREATE TABLE " . $table_name . " (
+				gb_id INT(11) NOT NULL AUTO_INCREMENT,
+				lesson_id INT(10) NOT NULL,
+				gb_student_id VARCHAR(255) NOT NULL,
+				gb_group_id VARCHAR(255) NOT NULL,
+				gb_subject_id VARCHAR(255) NOT NULL,
+				gb_teacher_ip VARCHAR(255) NOT NULL,
+				gb_teacher_id VARCHAR(255) NOT NULL,
+				gb_update_time VARCHAR(255) NOT NULL,
+				gb_update_date VARCHAR(255) NOT NULL,
+				gb_point VARCHAR(255) NOT NULL,
+				PRIMARY KEY  (gb_id)
+			);";
+
+			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+			dbDelta( $sql );
+
+				//add_option( EmailLog::DB_OPTION_NAME, EmailLog::DB_VERSION );
+		}
+	}
+
+
+
 }
 
 

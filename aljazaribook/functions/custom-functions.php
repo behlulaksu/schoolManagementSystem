@@ -78,11 +78,11 @@ function get_student_one_not($gb_group_id,$gb_subject_id,$gb_quarter_id,$gb_grad
 	return $sonuclar[0]->gb_point;
 
 }
-function get_subject_subdomain_point($gb_group_id,$gb_subject_id,$gb_quarter_id,$gb_gradebook_id,$gb_domain_id, $gb_subdomain_id){
-	$book_objective = "book_".get_current_blog_id()."_gradebook";
+function get_subject_subdomain_point($gb_group_id,$gb_subject_id,$lesson_id){
+	$book_objective = "book_".get_current_blog_id()."_object_asset";
 
 	global $wpdb;
-	$query = $wpdb->prepare("SELECT * from $book_objective where gb_group_id =".$gb_group_id." and gb_subject_id =".$gb_subject_id." and gb_quarter_id =".$gb_quarter_id." and gb_gradebook_id =".$gb_gradebook_id." and gb_domain_id =".$gb_domain_id." and gb_subdomain_id =".$gb_subdomain_id."" );
+	$query = $wpdb->prepare("SELECT * from $book_objective where gb_group_id =".$gb_group_id." and gb_subject_id =".$gb_subject_id." and lesson_id =".$lesson_id."" );
 	$sonuclar = $wpdb->get_results($query);
 	return $sonuclar;
 
@@ -255,6 +255,19 @@ function get_credit($class_id,$subject_id){
 
 	global $wpdb;
 	$query = $wpdb->prepare("SELECT * from $subject_credit where bloog_id =".$blog_id." and class_id =".$class_id." and subjecet_id	 =".$subject_id."" );
+	$sonuclar = $wpdb->get_results($query);
+	return $sonuclar;
+
+}
+
+
+
+/*objective assessment*/
+function get_student_object_asssat($gb_group_id,$gb_subject_id,$gb_student_id,$lesson_id){
+	$book_objective = "book_".get_current_blog_id()."_object_asset";
+
+	global $wpdb;
+	$query = $wpdb->prepare("SELECT * from $book_objective where gb_group_id =".$gb_group_id." and gb_subject_id =".$gb_subject_id." and lesson_id =".$lesson_id." and gb_student_id =".$gb_student_id."" );
 	$sonuclar = $wpdb->get_results($query);
 	return $sonuclar;
 

@@ -831,6 +831,11 @@ function my_ajax_new_delete_lesson(){
 		array('id' => $delete_lesson_id)
 	);
 
+	$book_objective = "book_".get_current_blog_id()."_object_asset";
+	$sonuclar = $wpdb->delete(
+		$book_objective,
+		array('lesson_id' => $delete_lesson_id)
+	);
 
 
 
@@ -838,5 +843,104 @@ function my_ajax_new_delete_lesson(){
 
 	wp_die();
 
+
+}
+
+
+
+add_action('wp_ajax_nopriv_my_ajax_save_object_mark', 'my_ajax_save_object_mark');
+add_action('wp_ajax_my_ajax_save_object_mark', 'my_ajax_save_object_mark');
+
+function my_ajax_save_object_mark(){
+	global $wpdb;
+	$sonuclar = 'problem';
+	$registerdate = date('d/m/Y l');
+	$registertime = date('G:i:s');
+	$ip = $_SERVER['REMOTE_ADDR'];
+	$current_user = get_current_user_id();
+
+	$group = $_REQUEST["group"];
+	$subject = $_REQUEST["subject"];
+	$lesson_id = $_REQUEST["lesson_id"];
+
+	$student_id = $_REQUEST["student_id"];
+	$student_point = $_REQUEST["student_point"];
+
+	$bg_table_name = "book_".get_current_blog_id()."_object_asset";
+
+
+	foreach ($student_id as $key => $value) {
+		$point_control = get_student_object_asssat($group,$subject,$value,$lesson_id);
+		if (empty($point_control)) {
+			if ($student_point[$key] != "") {
+				if(
+					$wpdb->insert($bg_table_name, array(
+						'gb_student_id' => $value,
+						'gb_group_id' => $group,
+						'gb_subject_id' => $subject,
+						'lesson_id' => $lesson_id,
+						'gb_teacher_ip' => $ip,
+						'gb_teacher_id' => $current_user,
+						'gb_update_time' => $registertime,
+						'gb_update_date' => $registerdate,
+
+						'gb_point' => $student_point[$key],
+
+					))
+				){
+					$sonuclar="tamam";
+				}else{
+					$sonuclar="problem";
+				}
+			}
+		}else{
+			/*here we ganna make update for point*/
+			$sonuclar = "bu not zaten var";
+			if ($point_control[0]->gb_point != $student_point[$key]) {
+				$wpdb->update( $bg_table_name, 
+					array( 
+						'gb_teacher_ip' => $ip,
+						'gb_teacher_id' => $current_user,
+						'gb_update_time' => $registertime,
+						'gb_update_date' => $registerdate,
+
+						'gb_point' => $student_point[$key],
+					), 
+					array( 'gb_id' => $point_control[0]->gb_id ) 
+				);
+			}
+
+		}
+
+	}
+
+
+
+	wp_send_json_success( $sonuclar);
+
+	wp_die();
+
+
+
+}
+
+
+add_action('wp_ajax_nopriv_my_ajax_get_object_asst', 'my_ajax_get_object_asst');
+add_action('wp_ajax_my_ajax_get_object_asst', 'my_ajax_get_object_asst');
+
+function my_ajax_get_object_asst(){
+
+	global $wpdb;
+	$sonuclar = 'problem';
+
+	$group = $_REQUEST["group"];
+	$subject = $_REQUEST["subject"];
+	$lesson_id = $_REQUEST["lesson_id"];
+
+	$point_control = get_subject_subdomain_point($group,$subject,$lesson_id);
+
+	wp_send_json_success( $point_control);
+
+	wp_die();
 
 }
