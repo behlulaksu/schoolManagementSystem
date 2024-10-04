@@ -115,6 +115,3 @@ $sonuclar = $wpdb->get_results($query);
 <!-- Datatable init js -->
 <script src="<?php echo get_template_directory_uri(); ?>/assets/js/pages/datatables.init.js"></script> 
 
-<script>
-	console.log("test commit 2");
-</script>
