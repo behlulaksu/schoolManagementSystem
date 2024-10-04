@@ -1,44 +1,82 @@
 <?php 
 
-
 function get_user_access_read($nereye){
 	$current_user_id = get_current_user_id();
-	$post_all_modules = get_page_by_path($nereye, OBJECT, 'author_functions'); 
-	if ($post_all_modules) {
-		$post_all_modules_acf = get_field('read', $post_all_modules->ID);
-		if ($post_all_modules_acf) {
-			if (in_array($current_user_id, $post_all_modules_acf)) {
-				return in_array($current_user_id, $post_all_modules_acf);
+
+	$user_id = $current_user_id; 
+	$user_info = get_userdata($user_id); 
+	$user_roles = "";
+	if ($user_info) {
+		$user_roles = implode(', ', $user_info->roles); 
+	}
+	if ($user_roles == "administrator") {
+		return true;
+	}else{
+		/*normal control start*/
+		$post_all_modules = get_page_by_path($nereye, OBJECT, 'author_functions'); 
+		if ($post_all_modules) {
+			$post_all_modules_acf = get_field('read', $post_all_modules->ID);
+			if ($post_all_modules_acf) {
+				if (in_array($current_user_id, $post_all_modules_acf)) {
+					return in_array($current_user_id, $post_all_modules_acf);
+				}
 			}
 		}
+		/*normal control end*/
 	}
 }
 
 
 function get_user_access_write($nereye){
 	$current_user_id = get_current_user_id();
-	$post_all_modules = get_page_by_path($nereye, OBJECT, 'author_functions'); 
-	if ($post_all_modules) {
-		$post_all_modules_acf = get_field('write_users', $post_all_modules->ID);
-		if ($post_all_modules_acf) {
-			if (in_array($current_user_id, $post_all_modules_acf)) {
-				return in_array($current_user_id, $post_all_modules_acf);
+
+	$user_id = $current_user_id; 
+	$user_info = get_userdata($user_id); 
+	$user_roles = "";
+	if ($user_info) {
+		$user_roles = implode(', ', $user_info->roles); 
+	}
+	if ($user_roles == "administrator") {
+		return true;
+	}else{
+		/*normal control start*/
+		$post_all_modules = get_page_by_path($nereye, OBJECT, 'author_functions'); 
+		if ($post_all_modules) {
+			$post_all_modules_acf = get_field('write_users', $post_all_modules->ID);
+			if ($post_all_modules_acf) {
+				if (in_array($current_user_id, $post_all_modules_acf)) {
+					return in_array($current_user_id, $post_all_modules_acf);
+				}
 			}
 		}
+		/*normal control end*/
 	}
 }
 
 
 function get_user_access_delete($nereye){
 	$current_user_id = get_current_user_id();
-	$post_all_modules = get_page_by_path($nereye, OBJECT, 'author_functions'); 
-	if ($post_all_modules) {
-		$post_all_modules_acf = get_field('delete', $post_all_modules->ID);
-		if ($post_all_modules_acf) {
-			if (in_array($current_user_id, $post_all_modules_acf)) {
-				return in_array($current_user_id, $post_all_modules_acf);
+
+	$user_id = $current_user_id; 
+	$user_info = get_userdata($user_id); 
+	$user_roles = "";
+	if ($user_info) {
+		$user_roles = implode(', ', $user_info->roles); 
+	}
+	if ($user_roles == "administrator") {
+		return true;
+	}else{
+		/*normal control start*/
+		$post_all_modules = get_page_by_path($nereye, OBJECT, 'author_functions'); 
+		if ($post_all_modules) {
+			$post_all_modules_acf = get_field('delete', $post_all_modules->ID);
+			if ($post_all_modules_acf) {
+				if (in_array($current_user_id, $post_all_modules_acf)) {
+					return in_array($current_user_id, $post_all_modules_acf);
+				}
 			}
 		}
+		/*normal control end*/
 	}
 }
 

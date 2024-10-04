@@ -88,6 +88,7 @@ function create_pages(){
 
 
 $variable = get_sites();
+
 foreach ($variable as $key => $value) {
 
 	switch_to_blog($value->blog_id);
@@ -1191,6 +1192,22 @@ foreach ($variable as $key => $value) {
 	}
 
 
+	/* All History */
+	$posttitle = 'All History';
+	$postid = $wpdb->get_var( "SELECT * FROM $wpdb->posts WHERE post_title = '" . $posttitle . "'" );
+
+	if (empty($postid)) {
+		$pagedata = array(
+			'post_title'    => 'All History',
+			'post_type'     => 'page',
+			'post_status'   => 'publish',
+			'page_template'  => 'logs/all-history.php'
+
+		);
+		$sonuclar = wp_insert_post($pagedata);
+	}
+
+
 
 	
 	restore_current_blog();
@@ -1199,4 +1216,6 @@ foreach ($variable as $key => $value) {
 }
 
 }
+
+
 
